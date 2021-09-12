@@ -19,3 +19,6 @@ A payment network for merchants to receive crypto payments, sell gift cards, and
 
 8- A merchat creates a list of products with description and prices on IPFS or another distributed storage
 
+9- A merchant can raise funds for a specific purpose in exchange of NFT gift cards with special discounts
+
+10- Consumers can redeem their gift/discount cards after a date pre-defined by the merchant
