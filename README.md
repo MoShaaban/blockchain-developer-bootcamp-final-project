@@ -1,24 +1,14 @@
 # Project Description
 
-A payment network for merchants to receive crypto payments, sell gift cards, and raise funds.
+An NFT marketplace for NFT gifts for specific occasions (example: birthday, anniversary, etc). The use case below is for birthday NFTs.
 
+1- A minter designs and creates a collection of birthday NFTs (those NFTs could be assigned to a specific date or not)
+2- User A can create a bid on an NFT one month before their birthday
+3- User A can choose to invite his/her friends to add to his/her bid
+4- User A can choose from an NFT design for a specific date or choose a generic one and assign it to his/her birthday if he/she got the NFT
+5- Companies can provide special offers to NFT holders on their birthday
+6- NFT holders receive the offers on their wallet as a message
+7- Companies can verify NFTs to see if the NFT holder qualifies for offers of a specific birthday
+8- Companies pay an ERC20 token or ETH to post offers and send messager to NFT holders
+9- NFT holders will get ERC20 rewards on their birthday every year from the tokens paid by companies in addition to the offer provided by the 
 
-1- A merchant creates a Merchant Account
-
-2- A consumer creates a User Account
-
-3- A consumer can search for merchants accepting crypto payments in a specific location
-
-4- A consumer can pay for products in a a Stable Token—example: DAI—over L2 solution
-
-5- Consumers and Merchants get rewarded for using the network in the project's token
-
-6- Consumers and Merchants can swap the project's token for other tokens via a DEX from our Web Dapp
-
-7- Consumers and Merchants can mint special NFT giftcards and send or sell them to other users
-
-8- A merchat creates a list of products with description and prices on IPFS or another distributed storage
-
-9- A merchant can raise funds for a specific purpose in exchange of NFT gift cards with special discounts
-
-10- Consumers can redeem their gift/discount cards after a date pre-defined by the merchant
