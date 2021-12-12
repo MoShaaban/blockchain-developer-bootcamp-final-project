@@ -11,11 +11,11 @@ import "hardhat/console.sol";
 //instead of writing it from scratch
 contract MyPhotographyNFTs is ERC721URIStorage {
 //track token IDs
-using Counters for Counters.counter;
-Counters.counter private _tokenIds;
+using Counters for Counters.Counter;
+Counters.Counter private _tokenIds;
 
 //Construct the contract and give it the token name
-    constructor() REC721 ("Inconceivable Photography", "iPhoto"){
+    constructor() ERC721 ("Inconceivable Photography", "iPhoto"){
         console.log("This is my photography work");
     }
 
