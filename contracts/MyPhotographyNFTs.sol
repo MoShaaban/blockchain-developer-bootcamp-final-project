@@ -1,40 +1,40 @@
-// SPDX-License-Identifier: UNLICENSED
+/// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-//Importing OpenZeppelin contracts—ERC721 for NFT standerd and Counters to count each NFT 
-//minted starting from 0—and Hardhat console
+///Importing OpenZeppelin contracts—ERC721 for NFT standerd and Counters to count each NFT 
+///minted starting from 0—and Hardhat console
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 
-// Import the helper functions from the library found on Github in the libraries folder
+/// Import the helper functions from the library found on Github in the libraries folder
 import { Base64 } from "./libraries/Base64.sol";
 
-//Inheriting the ERC721 contract that we imported to call its fuctionens 
-//instead of writing it from scratch
+///Inheriting the ERC721 contract that we imported to call its fuctionens 
+///instead of writing it from scratch
 contract MyPhotographyNFTs is ERC721URIStorage {
-//track token IDs
+///track token IDs
 using Counters for Counters.Counter;
 Counters.Counter private _tokenIds;
 
-//create a baseSvg variable to be used in all the images
+///create a baseSvg variable to be used in all the images
   string baseSvg = "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 24px; }</style><rect width='100%' height='100%' fill='black' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
 
-//create 3 arrays to randomly create the funny qoute from
+///create 3 arrays to randomly create the funny qoute from
 string[] firstWords = ["I", "You", "Elephant", "Superman", "Fish", "Gelly", "Liverpool", "Egg"];
   string[] secondWords = ["Fly", "Fry", "Eat", "Dance", "Jump", "kick", "Sing", "Beat"];
   string[] thirdWords = ["Table", "Plane", "Peanut", "Phone", "Chocolate", "Cat", "Dog"];
 
-    //an event when an NFT is mined
+    ///an event when an NFT is mined
   event NewMintedNFT(address sender, uint256 newPhotoId);
 
-//Construct the contract and give it the token name
+///Construct the contract and give it the token name
     constructor() ERC721 ("Inconceivable Photography", "iPhoto"){
         console.log("This is my photography work");
     }
 
-//  Picking a word from each array, randomly
+///  Picking a word from each array, randomly
   function pick1stWords(uint256 tokenId) public view returns (string memory) {
     uint256 rand = random(string(abi.encodePacked("FIRST_WORD", Strings.toString(tokenId))));
     rand = rand % firstWords.length;
@@ -57,27 +57,27 @@ function pick3rdWord(uint256 tokenId) public view returns (string memory) {
       return uint256(keccak256(abi.encodePacked(input)));
   }
 
-//A function to generate the NFTs
+///A function to generate the NFTs
     function makeNFT() public{
-        //Get the current ID
+        ///Get the current ID
     uint256 newPhotoId = _tokenIds.current();
 
-//Pick one word from each array
+///Pick one word from each array
     string memory first = pick1stWords(newPhotoId);
     string memory second = pick2ndWord(newPhotoId);
     string memory third = pick3rdWord(newPhotoId);
 
-    // Create the qoute and close the <text> and <svg> tags in the baseSvg
+    /// Create the qoute and close the <text> and <svg> tags in the baseSvg
     string memory finalSvg = string(abi.encodePacked(baseSvg, first, second, third, "</text></svg>"));
     console.log(finalSvg);
 
-    // Get all the JSON metadata in place and base64 encode it
+    /// Get all the JSON metadata in place and base64 encode it
     string memory json = Base64.encode(
         bytes(
             string(
                 abi.encodePacked(
                     '{"name": "combinedWord", "description": "A highly acclaimed collection of squares.", "image": "data:image/svg+xml;base64,',
-                    // Add data:image/svg+xml;base64 and then append base64 encode svg
+                    /// Add data:image/svg+xml;base64 and then append base64 encode svg
                     Base64.encode(bytes(finalSvg)),
                     '"}'
                 )
@@ -85,20 +85,20 @@ function pick3rdWord(uint256 tokenId) public view returns (string memory) {
         )
     );
 
-            // Prepend data:application/json;base64, to data.
+            /// Prepend data:application/json;base64, to data.
     string memory finalTokenUri = string(
         abi.encodePacked("data:application/json;base64,", json)
     );
 
-        //Mint the token
+        ///Mint the token
         _safeMint(msg.sender, newPhotoId);
-        //Set the NFT data
+        ///Set the NFT data
         _setTokenURI(newPhotoId, finalTokenUri);
         console.log(finalTokenUri);
-        //Increase the current ID by 1
+        ///Increase the current ID by 1
         _tokenIds.increment();
 
-        //emit an event to send the token id to the sender
+        ///emit an event to send the token id to the sender
         emit NewMintedNFT(msg.sender, newPhotoId);
     }
 
