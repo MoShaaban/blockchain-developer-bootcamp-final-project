@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity 0.8.10;
 
 ///Importing OpenZeppelin contracts—ERC721 for NFT standerd and Counters to count each NFT 
 ///minted starting from 0—and Hardhat console
@@ -14,6 +14,8 @@ import { Base64 } from "./libraries/Base64.sol";
 ///Inheriting the ERC721 contract that we imported to call its fuctionens 
 ///instead of writing it from scratch
 contract MyPhotographyNFTs is ERC721URIStorage {
+///setting owner address
+address owner;
 ///track token IDs
 using Counters for Counters.Counter;
 Counters.Counter private _tokenIds;
@@ -31,6 +33,7 @@ string[] firstWords = ["I", "You", "Elephant", "Superman", "Fish", "Gelly", "Liv
 
 ///Construct the contract and give it the token name
     constructor() ERC721 ("Inconceivable Photography", "iPhoto"){
+        owner = msg.sender;
         console.log("This is my photography work");
     }
 
@@ -102,4 +105,5 @@ function pick3rdWord(uint256 tokenId) public view returns (string memory) {
         emit NewMintedNFT(msg.sender, newPhotoId);
     }
 
+  
 }
