@@ -1,38 +1,43 @@
 const { expect } = require('chai') ;
 
 describe('myPhotographyNFT contract', ()=> {
-let Token, token, owner, addr1;
+let MyPhotographyNFTs, myPhotographyNFTs, owner, addr1;
 
-beforeEach(async () => {
-    Token = await ethers.getContractFactory('MyPhotographyNFTs');
-    token = await Token.deploy();
-    [owner, addr1, _] = await ethers.getSigners();
-});
-
-describe('Deployment', () => {
-    it('Should set the right owner', async() => {
-        expect(await token.owner).to.equal(owner.address);
+    beforeEach(async () => {
+        MyPhotographyNFTs = await ethers.getContractFactory('MyPhotographyNFTs');
+        myPhotographyNFTs = await MyPhotographyNFTs.deploy();
+        [owner, addr1, _] = await ethers.getSigners();
     });
 
-    it('Should mint a token', async () => {
-        expect(await token.newPhotoId).to.equal(1);
+    describe('Deployment', () => {
+        it('Should set the right owner', async() => {
+            expect(await myPhotographyNFTs.owner()).to.equal(owner.address);
+        });
+
+        it('Should mint a token', async () => {
+            await myPhotographyNFTs.makeNFT(owner.address);
+            expect(await myPhotographyNFTs.newPhotoId()).to.equal("1");
+        });
+
+        it('Should send first token to owner', async () => {
+            await myPhotographyNFTs.makeNFT(owner.address);
+            expect(await myPhotographyNFTs.ownerOf(1)).to.equal(owner.address);
+        });
     });
 
-    it('Should send first token to owner', async () => {
-        expect(await token.ownerOf(1)).to.equal(token.owner);
-    });
-});
-
-describe('Transaction', () => {
-it('Should send only one token to a user that mints a token', async () => {
-    await token._safeMint(addr1.address, 2);
-    const addrBalance = await token.balanceOf(addr1.address);
+ describe('Transaction', () => {
+    it('Should send only one token to the correct receipient', async () => {
+        await myPhotographyNFTs.makeNFT(owner.address);
+        await myPhotographyNFTs.makeNFT(addr1.address);
+    const addrBalance = await myPhotographyNFTs.balanceOf(addr1.address);
     expect(addrBalance).to.equal(1);
 });
 
-it('Should send token to the correct address', async () => {
-    expect(await token.ownerOf(2)).to.equal(addr1.address);
-});
+    it('increment the token id for every minted token', async () => {
+        await myPhotographyNFTs.makeNFT(owner.address);
+        await myPhotographyNFTs.makeNFT(addr1.address);
+        expect(await myPhotographyNFTs.newPhotoId()).to.equal("2");
+ });
 });
 
 });
