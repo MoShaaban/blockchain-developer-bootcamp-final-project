@@ -6,4 +6,6 @@
 ---The Openzeppelin Strings to manipulate strings to create the random three words
 
 
-2- 
+2- Calling functions from other contracts such as:
+---Counter
+---Base64

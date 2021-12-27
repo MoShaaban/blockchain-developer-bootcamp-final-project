@@ -72,10 +72,12 @@ function pick3rdWord(uint256 tokenId) public view returns (string memory) {
         string memory first = pick1stWords(newPhotoId);
         string memory second = pick2ndWord(newPhotoId);
         string memory third = pick3rdWord(newPhotoId);
+        
 
         /// Create the qoute and close the <text> and <svg> tags in the baseSvg
         string memory finalSvg = string(abi.encodePacked(baseSvg, first, second, third, "</text></svg>"));
         console.log(finalSvg);
+        
 
         /// Get all the JSON metadata in place and base64 encode it
         string memory json = Base64.encode(
@@ -90,6 +92,10 @@ function pick3rdWord(uint256 tokenId) public view returns (string memory) {
                 )
             )
         );
+        
+
+
+
 
                 /// Prepend data:application/json;base64, to data.
         string memory finalTokenUri = string(
